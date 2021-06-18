@@ -1,2 +1,2 @@
 const database = require('./database');
-console.log(database.teams);
+console.log(database.equipments);
