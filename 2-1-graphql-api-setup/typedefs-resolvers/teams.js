@@ -1,5 +1,5 @@
 const { gql } = require('apollo-server');
-const database = require('../../3-1-server-modularized/database');
+const dbWorks = require('../dbWorks');
 
 const typeDefs = gql`
   type Team {
@@ -16,12 +16,8 @@ const typeDefs = gql`
 
 const resolvers = {
   Query: {
-    teams: () =>
-      database.teams.map((team) => {
-        team.supplies = database.supplies.filter((supply) => supply.team === team.id);
-        return team;
-      }),
-    team: (parent, { id }, context, info) => database.teams.find((team) => team.id === id),
+    teams: dbWorks.getTeams,
+    team: (parent, args, context, info) => dbWorks.getTeam(args),
   },
 };
 
